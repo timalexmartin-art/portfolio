@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tableau Project | Enterprise DQ & Compliance Monitoring</title>
+  <meta name="description" content="Simulated enterprise Tableau project: data quality controls and compliance monitoring dashboard." />
+
+  <!-- Tableau JS API -->
+  <script src="https://public.tableau.com/javascripts/api/viz_v1.js"></script>
+
+  <style>
+    :root{
+      --bg:#0b0f18;
+      --panel:#111827;
+      --panel2:#0f172a;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --accent:#22d3ee;
+      --accent2:#a78bfa;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(34,211,238,.10), transparent),
+                  radial-gradient(900px 600px at 80% 90%, rgba(167,139,250,.10), transparent),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    .container{ width:min(1120px, 92vw); margin:0 auto; }
+
+    header{ padding:40px 0 16px; }
+    .topnav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .link{
+      color:var(--text);
+      text-decoration:none;
+      border:1px solid var(--border);
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.02);
+      font-size:13px;
+    }
+    h1{ margin:0 0 10px; font-size:clamp(26px, 4vw, 42px); line-height:1.1; }
+    .subtitle{ margin:0; color:var(--muted); max-width:90ch; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:16px;
+      padding: 12px 0 44px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .card .inner{ padding:20px; }
+
+    .span-12{ grid-column: span 12; }
+    .span-8{ grid-column: span 8; }
+    .span-6{ grid-column: span 6; }
+    .span-4{ grid-column: span 4; }
+
+    h2{ margin:0 0 10px; font-size:18px; }
+    h3{ margin:0 0 8px; font-size:13px; color:var(--muted); font-weight:900; letter-spacing:.10em; text-transform:uppercase; }
+    p{ margin:0 0 12px; }
+    ul{ margin: 0; padding-left: 18px; }
+    li{ margin: 7px 0; color: var(--text); }
+
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .chip{
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid var(--border);
+      padding:5px 9px;
+      border-radius:999px;
+      background: rgba(255,255,255,.02);
+    }
+
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+    .kpi{
+      border:1px dashed rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius:14px;
+      padding:14px;
+    }
+    .kpi .label{ color:var(--muted); font-size:12px; font-weight:800; }
+    .kpi .value{ margin-top:8px; font-size:20px; font-weight:900; }
+    .kpi.ok{ outline: 2px solid rgba(34,197,94,.18); }
+    .kpi.warn{ outline: 2px solid rgba(245,158,11,.18); }
+    .kpi.bad{ outline: 2px solid rgba(239,68,68,.18); }
+
+    .viz-holder{
+      position:relative;
+      width:100%;
+      aspect-ratio: 16 / 9;
+      overflow:hidden;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background: var(--panel2);
+    }
+    .tableauPlaceholder,
+    .tableauPlaceholder object{
+      width:100%;
+      height:100%;
+    }
+
+    .disclosure{
+      border-left:3px solid var(--accent);
+      padding-left:14px;
+      color:var(--muted);
+      background: rgba(255,255,255,.02);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    footer{
+      padding: 22px 0 46px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 980px){
+      .span-8, .span-6, .span-4{ grid-column: span 12; }
+      .kpis{ grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <div class="topnav">
+      <a class="link" href="index.html">← Home</a>
+      <a class="link" href="https://public.tableau.com/views/DataQualityControlsandCompliance3/Dashboard1" target="_blank" rel="noreferrer">
+        Open on Tableau Public
+      </a>
+    </div>
+
+    <h1>Enterprise Data Quality & Compliance Monitoring (Simulated)</h1>
+    <p class="subtitle">
+      A simulated enterprise governance dashboard built in Tableau to monitor data quality controls, SLA compliance, and rule-level exceptions
+      across multiple systems and domains—supporting faster triage and remediation prioritization.
+    </p>
+
+    <div class="chips">
+      <span class="chip">Tableau</span>
+      <span class="chip">Data Governance</span>
+      <span class="chip">DQ Controls</span>
+      <span class="chip">SLA Monitoring</span>
+      <span class="chip">Exception Trending</span>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi ok">
+        <div class="label">DQ Pass % Target</div>
+        <div class="value">≥ 98%</div>
+      </div>
+      <div class="kpi warn">
+        <div class="label">SLA Breach Threshold</div>
+        <div class="value">≤ 5 / month</div>
+      </div>
+      <div class="kpi ok">
+        <div class="label">DQ Score Target</div>
+        <div class="value">≥ 95</div>
+      </div>
+      <div class="kpi bad">
+        <div class="label">Escalation Trigger</div>
+        <div class="value">Red / High Risk</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="grid">
+
+      <!-- Viz -->
+      <article class="card span-12">
+        <div class="inner">
+          <h2>Interactive Dashboard</h2>
+          <p class="muted" style="color:var(--muted);">
+            Use filters to focus on systems and months. Click marks to drill into exceptions and rule types.
+          </p>
+
+          <div class="viz-holder">
+            <div class="tableauPlaceholder" id="tableauViz">
+              <noscript>
+                <a href="https://public.tableau.com/views/DataQualityControlsandCompliance3/Dashboard1">
+                  View Dashboard on Tableau Public
+                </a>
+              </noscript>
+
+              <object class="tableauViz">
+                <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+                <param name="site_root" value="" />
+
+                <!-- CRITICAL: WorkbookName/DashboardName (from your Tableau URL) -->
+                <param name="name" value="DataQualityControlsandCompliance3/Dashboard1" />
+
+                <param name="tabs" value="no" />
+                <param name="toolbar" value="yes" />
+                <param name="showVizHome" value="no" />
+              </object>
+            </div>
+          </div>
+
+          <div style="margin-top:10px; font-size:12px; color:var(--muted);">
+            Embed uses: <code>name = DataQualityControlsandCompliance3/Dashboard1</code>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project Description -->
+      <article class="card span-8">
+        <div class="inner">
+          <h2>Project Description</h2>
+          <p>
+            This portfolio project simulates a multi-system enterprise environment where Data Governance and Compliance teams monitor
+            quality controls (null checks, duplicate detection, range validations) and timeliness SLAs across key domains
+            (Customer, Lending, Payments, Finance, Risk).
+          </p>
+          <p>
+            The dashboard consolidates governance KPIs into a single executive view and supports drill-down for remediation and control monitoring.
+          </p>
+
+          <h3 style="margin-top:14px;">Business problem</h3>
+          <ul>
+            <li>Controls exist, but metrics are fragmented across systems and teams.</li>
+            <li>SLA breaches are discovered late—after downstream reporting breaks.</li>
+            <li>Root-cause analysis is slowed by limited drill-down and weak attribution.</li>
+            <li>Leadership lacks a consistent method to prioritize remediation based on risk.</li>
+          </ul>
+
+          <h3 style="margin-top:14px;">Solution overview</h3>
+          <ul>
+            <li>Cross-system DQ scorecard (DQ score, pass %, SLA breaches)</li>
+            <li>Monthly trend views to detect deterioration early</li>
+            <li>Rule-type breakdowns (Null/Duplicate/Range/SLA)</li>
+            <li>RAG thresholds to standardize triage and escalation</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Skills -->
+      <aside class="card span-4">
+        <div class="inner">
+          <h2>Skills Demonstrated</h2>
+          <ul>
+            <li>Governance-focused dashboard design</li>
+            <li>KPI scorecards and RAG thresholding</li>
+            <li>Trend and exception analysis</li>
+            <li>Interactive filtering and drill-down patterns</li>
+            <li>Metric definitions aligned to controls & compliance</li>
+          </ul>
+
+          <h3 style="margin-top:14px;">Tech stack</h3>
+          <ul>
+            <li>Tableau (Desktop/Public)</li>
+            <li>Simulated enterprise dataset</li>
+            <li>SQL-ready structure (portable modeling)</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Insights -->
+      <article class="card span-6">
+        <div class="inner">
+          <h2>Key Insights (Example Narrative)</h2>
+          <p style="color:var(--muted);">
+            Replace these bullets with real observations once you finalize the dashboard.
+          </p>
+          <ul>
+            <li><b>Risk concentration:</b> A small number of systems drive most exceptions—targeted remediation delivers outsized improvement.</li>
+            <li><b>Month-end clustering:</b> SLA breaches increase near month-end cycles—suggesting batch contention or upstream dependency delays.</li>
+            <li><b>Rule volatility:</b> Duplicate exceptions fluctuate more than null checks—often tied to parsing/key generation changes.</li>
+            <li><b>Better prioritization:</b> Combining exception volume with SLA breaches provides a clearer risk signal than DQ score alone.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Metric Definitions -->
+      <article class="card span-6">
+        <div class="inner">
+          <h2>Metric Definitions (Governance-Ready)</h2>
+          <ul>
+            <li><b>DQ Pass %:</b> Percent of records passing core controls (e.g., null + duplicate checks).</li>
+            <li><b>DQ Score:</b> Composite indicator used to trend overall data health across systems.</li>
+            <li><b>SLA Breaches:</b> Timeliness violations for scheduled refresh/delivery windows.</li>
+            <li><b>RAG Risk Flag:</b> Threshold classification supporting triage and escalation.</li>
+          </ul>
+
+          <h3 style="margin-top:14px;">Disclosure</h3>
+          <div class="disclosure">
+            This is a simulated enterprise portfolio project. The organization and dataset are fictional; governance controls and workflows
+            are modeled after real-world enterprise data quality and compliance practices.
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <script>document.write(new Date().getFullYear())</script> Timothy Martin — Data Analytics & Governance
+    </div>
+  </footer>
+</body>
+</html>
