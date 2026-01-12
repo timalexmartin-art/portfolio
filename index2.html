@@ -99,14 +99,28 @@
       background: rgba(255,255,255,.02);
     }
 
+    /* --- Power BI embed styling (added) --- */
+    .embed-wrap{
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(0,0,0,.20);
+    }
+    .embed-wrap iframe{
+      width: 100%;
+      height: 640px; /* desktop default */
+      border: 0;
+      display:block;
+    }
+    @media (max-width: 980px){
+      .span-8, .span-4{ grid-column: span 12; }
+      .embed-wrap iframe{ height: 520px; } /* tablet/phone */
+    }
+
     footer{
       padding: 22px 0 46px;
       color: var(--muted);
       border-top: 1px solid var(--border);
-    }
-
-    @media (max-width: 980px){
-      .span-8, .span-4{ grid-column: span 12; }
     }
   </style>
 </head>
@@ -156,6 +170,28 @@
         </div>
       </article>
 
+      <!-- Power BI Embed (added here) -->
+      <article class="card span-12">
+        <div class="inner">
+          <h2>Power BI Dashboard (Embedded)</h2>
+          <p style="color:var(--muted);">
+            Data Governance and Compliance Dashboard (Power BI embed).
+          </p>
+
+          <div class="embed-wrap">
+            <iframe
+              title="Data Governance and Compliance Dashboard"
+              src="https://app.powerbi.com/reportEmbed?reportId=f9326c9d-28aa-4de2-8fba-040a1f306e4e&autoAuth=true&ctid=69c2efd3-27e1-4a50-afab-a12a95e691c6"
+              allowfullscreen="true">
+            </iframe>
+          </div>
+
+          <p style="margin-top:12px; color:var(--muted); font-size:13px;">
+            Tip: If the embed ever prompts viewers to sign in, you may need a “Publish to web” embed link for public portfolio viewing.
+          </p>
+        </div>
+      </article>
+
       <!-- About -->
       <article class="card span-8">
         <div class="inner">
@@ -185,18 +221,19 @@
 
           <div id="contact" style="margin-top:14px;">
             <h2>Contact</h2>
-            <p style="margin:0; color:var(--muted);">
-              <section id="resume">
-                <h2>Resume</h2>
-                <p>
-                  <a href="resume.pdf" target="_blank" rel="noopener">Download my resume (PDF)</a>
-               </p>
+
+            <section id="resume">
+              <h2>Resume</h2>
+              <p>
+                <a href="resume.pdf" target="_blank" rel="noopener">Download my resume (PDF)</a>
+              </p>
+
               <h2>LinkedIn</h2>
               <p>
-               <a href="https://www.linkedin.com/in/timalexmartin/" target="_blank" rel="noopener">View my LinkedIn profile</a>
+                <a href="https://www.linkedin.com/in/timalexmartin/" target="_blank" rel="noopener">View my LinkedIn profile</a>
               </p>
             </section>
-            </p>
+
           </div>
         </div>
       </aside>
@@ -212,6 +249,7 @@
 </body>
 
 </html>
+
 
 
 
