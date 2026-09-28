@@ -6,9 +6,6 @@
   <title>Enterprise Data Quality & Compliance Monitoring | Timothy Martin</title>
   <meta name="description" content="Tableau dashboard portfolio project: data quality controls, SLA monitoring, and compliance governance metrics." />
 
-  <!-- Tableau JS API -->
-  <script src="https://public.tableau.com/javascripts/api/viz_v1.js"></script>
-
   <style>
     :root{
       --bg:#0b0f18;
@@ -157,11 +154,20 @@
       .span-8, .span-6, .span-4{ grid-column: span 12; }
     }
   </style>
+  <link rel="stylesheet" href="assets/reports.css">
+  <script src="assets/reports.js" defer></script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="container">
-    <div class="eyebrow">Portfolio Project</div>
+    <nav class="portfolio-nav" aria-label="Portfolio pages">
+      <a href="index2.html">Portfolio</a>
+      <a href="tableau.html" aria-current="page">Tableau</a>
+      <a href="powerbi.html">Power BI</a>
+      <a href="ascension-reconciliation/">Reconciliation</a>
+    </nav>
+    <div class="eyebrow">Tableau · Simulated portfolio project</div>
     <h1>Enterprise Data Quality & Compliance Monitoring</h1>
     <p class="subtitle">
       A Tableau dashboard designed to help data stewards and business stakeholders monitor data quality controls, SLA compliance,
@@ -193,9 +199,10 @@
         <div class="value">Flagged</div>
       </div>
     </div>
+    <p class="target-note">Illustrative governance targets · The cards above describe example thresholds, not current report results.</p>
   </header>
 
-  <main class="container">
+  <main class="container" id="main-content">
     <section class="grid">
 
       <!-- Ascension reconciliation prototype -->
@@ -218,37 +225,32 @@
 
 
       <!-- Tableau Viz -->
-      <article class="card span-12">
+      <article class="card span-12 report-card">
         <div class="inner">
           <h2>Interactive Dashboard</h2>
           <p class="muted">
             Use filters to focus on specific systems, months, and rule types. Click marks to drill into detail views.
           </p>
 
-          <div class="viz-holder">
-            <div class="tableauPlaceholder" id="tableauViz">
-              <noscript>
-                <a href="https://public.tableau.com/views/DataQualityControlsandCompliance3/Dashboard1">
-                  View Dashboard on Tableau Public
-                </a>
-              </noscript>
-
-              <object class="tableauViz">
-                <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
-                <param name="site_root" value="" />
-
-                <!-- CRITICAL: WorkbookName/DashboardName -->
-                <param name="name" value="DataQualityControlsandCompliance3/Dashboard1" />
-
-                <param name="tabs" value="no" />
-                <param name="toolbar" value="yes" />
-                <param name="showVizHome" value="no" />
-              </object>
+          <div class="report-shell" data-report data-provider="Tableau Public">
+            <div class="report-toolbar">
+              <span class="report-brand"><span class="report-dot" aria-hidden="true"></span>Tableau Public · Interactive report</span>
+              <div class="report-actions">
+                <a href="https://public.tableau.com/views/DataQualityControlsandCompliance3/Dashboard1" target="_blank" rel="noopener noreferrer" aria-label="Open this Tableau Public report in a new tab">Open report ↗</a>
+                <button type="button" data-report-fullscreen aria-pressed="false" hidden>Full screen</button>
+                <button type="button" data-report-reload hidden>Reload</button>
+              </div>
             </div>
+            <div class="report-viewport" tabindex="0" role="region" aria-label="Tableau Public report; scroll horizontally on small screens">
+              <iframe title="Data Quality and Compliance Dashboard — Tableau Public" src="https://public.tableau.com/views/DataQualityControlsandCompliance3/Dashboard1?:embed=yes&amp;:showVizHome=no&amp;:tabs=no&amp;:toolbar=bottom" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
+            </div>
+            <p class="report-status" data-report-status role="status">Hosted by Tableau Public. If the view is blank or unavailable, use Open report or Reload.</p>
           </div>
-
-          <div class="viz-note">
-            Embed configured with <code>name = DataQualityControlsandCompliance3/Dashboard1</code>.
+          <p class="narrow-hint">On a phone, swipe across the report to reach all visuals, or choose Open report for a separate tab.</p>
+          <div class="report-steps" aria-label="Suggested report walkthrough">
+            <div class="report-step"><b>1. Set the scope</b><p>Choose the available system, domain, or reporting-period filters.</p></div>
+            <div class="report-step"><b>2. Investigate exceptions</b><p>Compare the visible KPIs and exception views within that selection.</p></div>
+            <div class="report-step"><b>3. Explain the next action</b><p>Describe the issue, its impact, and who should investigate it. Clear your selections before changing scope.</p></div>
           </div>
         </div>
       </article>
@@ -304,14 +306,13 @@
       <!-- Insights -->
       <article class="card span-6">
         <div class="inner">
-          <h2>Key Insights (Example Narrative)</h2>
-          <p class="muted">
-            Replace these with your actual observations from the dashboard once you finalize it.
-          </p>
+          <h2>Questions to investigate</h2>
+          <p style="color:var(--muted);">Use the filtered report to test these questions before drawing conclusions.</p>
           <ul>
-            <li><b>System risk concentration:</b> A small number of systems drive the majority of rule failures, suggesting targeted remediation yields outsized impact.</li>
-            <li><b>Recurring breach windows:</b> SLA breaches cluster near month-end processing, indicating batch contention or upstream dependency timing issues.</li>
-            <li><b>Rule attribution:</b> Duplicate failures appear more volatile than null checks, often tied to upstream parsing or key generation changes.</li>
+            <li><b>Risk concentration:</b> Which systems contribute the most control failures?</li>
+            <li><b>Timing:</b> Do SLA breaches cluster in particular reporting periods?</li>
+            <li><b>Rule types:</b> Which checks drive changes in the overall result?</li>
+            <li><b>Prioritization:</b> Which issues need an owner, an evidence review, or follow-up?</li>
           </ul>
         </div>
       </article>
@@ -327,7 +328,7 @@
             <li><b>Risk Flag (RAG):</b> Threshold classification used to prioritize remediation and escalate issues.</li>
           </ul>
           <p class="muted" style="margin-top:12px;">
-            Tip: Add your preferred thresholds (e.g., Green ≥ 98, Yellow 95–97.9, Red &lt; 95) to match governance standards.
+            The thresholds above are illustrative targets for this simulated project. They are not live measurements from the report.
           </p>
         </div>
       </article>

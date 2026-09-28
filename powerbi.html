@@ -116,9 +116,12 @@
       border-top: 1px solid var(--border);
     }
   </style>
+  <link rel="stylesheet" href="assets/reports.css">
+  <script src="assets/reports.js" defer></script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="container">
     <div class="eyebrow">Power BI</div>
     <h1>Power BI Projects</h1>
@@ -127,15 +130,15 @@
       Use the embedded report below to explore the dashboard directly.
     </p>
 
-    <nav>
-      <a class="pill" href="index.html">Home</a>
-      <a class="pill" href="tableau.html">Tableau Projects</a>
-      <a class="pill" href="index2.html">Portfolio (Alt)</a>
-      <a class="pill" href="#contact">Contact</a>
+    <nav class="portfolio-nav" aria-label="Portfolio pages">
+      <a href="index2.html">Portfolio</a>
+      <a href="tableau.html">Tableau</a>
+      <a href="powerbi.html" aria-current="page">Power BI</a>
+      <a href="ascension-reconciliation/">Reconciliation</a>
     </nav>
   </header>
 
-  <main class="container">
+  <main class="container" id="main-content">
     <section class="grid">
 
       <!-- Ascension reconciliation prototype -->
@@ -158,7 +161,7 @@
 
 
       <!-- Overview -->
-      <article class="card span-4">
+      <article class="card span-12 report-overview">
         <div class="inner">
           <h2>Dashboard Overview</h2>
           <p style="color:var(--muted);">
@@ -180,18 +183,32 @@
       </article>
 
       <!-- Embed -->
-      <article class="card span-8">
+      <article class="card span-12 report-card">
         <div class="inner">
-          <h2>Embedded Report</h2>
+          <h2>Data Governance &amp; Compliance · Interactive Report</h2>
           <p style="color:var(--muted);">
-            If the embed prompts for sign-in, you may need a public “Publish to web” embed for portfolio viewing.
+            Explore the published report below. Use Full screen for a larger canvas or Open report to view it directly in Power BI.
           </p>
 
-          <div class="embed-wrap">
-            <iframe
-              title="Data Governance and Compliance Dashboard"
-              src="https://app.powerbi.com/view?r=eyJrIjoiNTZjMDI4ODEtM2FhYy00ZDA3LWIyMzYtYWMzZjQ1NjU4ZGRiIiwidCI6IjY5YzJlZmQzLTI3ZTEtNGE1MC1hZmFiLWExMmE5NWU2OTFjNiIsImMiOjF9" allowFullScreen="true">
-            </iframe>
+          <div class="report-shell" data-report data-provider="Power BI">
+            <div class="report-toolbar">
+              <span class="report-brand"><span class="report-dot" aria-hidden="true"></span>Power BI · Interactive report</span>
+              <div class="report-actions">
+                <a href="https://app.powerbi.com/view?r=eyJrIjoiNTZjMDI4ODEtM2FhYy00ZDA3LWIyMzYtYWMzZjQ1NjU4ZGRiIiwidCI6IjY5YzJlZmQzLTI3ZTEtNGE1MC1hZmFiLWExMmE5NWU2OTFjNiIsImMiOjF9" target="_blank" rel="noopener noreferrer" aria-label="Open this Power BI report in a new tab">Open report ↗</a>
+                <button type="button" data-report-fullscreen aria-pressed="false" hidden>Full screen</button>
+                <button type="button" data-report-reload hidden>Reload</button>
+              </div>
+            </div>
+            <div class="report-viewport" tabindex="0" role="region" aria-label="Power BI report; scroll horizontally on small screens">
+              <iframe title="Data Quality and Compliance Dashboard — Power BI" src="https://app.powerbi.com/view?r=eyJrIjoiNTZjMDI4ODEtM2FhYy00ZDA3LWIyMzYtYWMzZjQ1NjU4ZGRiIiwidCI6IjY5YzJlZmQzLTI3ZTEtNGE1MC1hZmFiLWExMmE5NWU2OTFjNiIsImMiOjF9" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
+            </div>
+            <p class="report-status" data-report-status role="status">Hosted by Power BI. If the view is blank or unavailable, use Open report or Reload.</p>
+          </div>
+          <p class="narrow-hint">On a phone, swipe across the report to reach all visuals, or choose Open report for a separate tab.</p>
+          <div class="report-steps" aria-label="Suggested report walkthrough">
+            <div class="report-step"><b>1. Set the scope</b><p>Choose the available system, domain, or reporting-period filters.</p></div>
+            <div class="report-step"><b>2. Investigate exceptions</b><p>Compare the visible KPIs and exception views within that selection.</p></div>
+            <div class="report-step"><b>3. Explain the next action</b><p>Describe the issue, its impact, and who should investigate it. Clear your selections before changing scope.</p></div>
           </div>
         </div>
       </article>

@@ -123,26 +123,29 @@
       border-top: 1px solid var(--border);
     }
   </style>
+  <link rel="stylesheet" href="assets/reports.css">
+  <script src="assets/reports.js" defer></script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="container">
     <div class="eyebrow">Portfolio</div>
-    <h1> Site Built by Timothy Martin</h1>
+    <h1>Timothy Martin · Data Analytics &amp; Governance</h1>
     <p class="subtitle">
       Data Analytics & Reporting professional with deep experience in governance-style metrics, controls monitoring, and executive-ready dashboards.
       This site showcases simulated enterprise projects and select work samples.
     </p>
 
-    <nav>
-      <a class="pill" href="tableau.html">Tableau Projects</a>
-      <a class="pill" href="powerbi.html">Power BI Projects</a>
-      <a class="pill" href="ascension-reconciliation/">Reconciliation Demo</a>
-      <a class="pill" href="#contact">Contact</a>
+    <nav class="portfolio-nav" aria-label="Portfolio pages">
+      <a href="index2.html" aria-current="page">Portfolio</a>
+      <a href="tableau.html">Tableau</a>
+      <a href="powerbi.html">Power BI</a>
+      <a href="ascension-reconciliation/">Reconciliation</a>
     </nav>
   </header>
 
-  <main class="container">
+  <main class="container" id="main-content">
     <section class="grid">
 
       <!-- Featured Project -->
@@ -171,23 +174,37 @@
         </div>
       </article>
 
-      <!-- Power BI Embed (added here) -->
-      <article class="card span-12">
+      <!-- Power BI Report -->
+      <article class="card span-12 report-card">
         <div class="inner">
-          <h2>Power BI Dashboard (Embedded)</h2>
+          <h2>Power BI · Data Governance &amp; Compliance</h2>
           <p style="color:var(--muted);">
             Data Governance and Compliance Dashboard (Power BI embed).
           </p>
 
-          <div class="embed-wrap">
-            <iframe
-              title="Data Governance and Compliance Dashboard"
-              src="https://app.powerbi.com/view?r=eyJrIjoiNTZjMDI4ODEtM2FhYy00ZDA3LWIyMzYtYWMzZjQ1NjU4ZGRiIiwidCI6IjY5YzJlZmQzLTI3ZTEtNGE1MC1hZmFiLWExMmE5NWU2OTFjNiIsImMiOjF9" frameborder="0" allowFullScreen="true">
-            </iframe>
+          <div class="report-shell" data-report data-provider="Power BI">
+            <div class="report-toolbar">
+              <span class="report-brand"><span class="report-dot" aria-hidden="true"></span>Power BI · Interactive report</span>
+              <div class="report-actions">
+                <a href="https://app.powerbi.com/view?r=eyJrIjoiNTZjMDI4ODEtM2FhYy00ZDA3LWIyMzYtYWMzZjQ1NjU4ZGRiIiwidCI6IjY5YzJlZmQzLTI3ZTEtNGE1MC1hZmFiLWExMmE5NWU2OTFjNiIsImMiOjF9" target="_blank" rel="noopener noreferrer" aria-label="Open this Power BI report in a new tab">Open report ↗</a>
+                <button type="button" data-report-fullscreen aria-pressed="false" hidden>Full screen</button>
+                <button type="button" data-report-reload hidden>Reload</button>
+              </div>
+            </div>
+            <div class="report-viewport" tabindex="0" role="region" aria-label="Power BI report; scroll horizontally on small screens">
+              <iframe title="Data Quality and Compliance Dashboard — Power BI" src="https://app.powerbi.com/view?r=eyJrIjoiNTZjMDI4ODEtM2FhYy00ZDA3LWIyMzYtYWMzZjQ1NjU4ZGRiIiwidCI6IjY5YzJlZmQzLTI3ZTEtNGE1MC1hZmFiLWExMmE5NWU2OTFjNiIsImMiOjF9" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
+            </div>
+            <p class="report-status" data-report-status role="status">Hosted by Power BI. If the view is blank or unavailable, use Open report or Reload.</p>
+          </div>
+          <p class="narrow-hint">On a phone, swipe across the report to reach all visuals, or choose Open report for a separate tab.</p>
+          <div class="report-steps" aria-label="Suggested report walkthrough">
+            <div class="report-step"><b>1. Set the scope</b><p>Choose the available system, domain, or reporting-period filters.</p></div>
+            <div class="report-step"><b>2. Investigate exceptions</b><p>Compare the visible KPIs and exception views within that selection.</p></div>
+            <div class="report-step"><b>3. Explain the next action</b><p>Describe the issue, its impact, and who should investigate it. Clear your selections before changing scope.</p></div>
           </div>
 
           <p style="margin-top:12px; color:var(--muted); font-size:13px;">
-            Tip: If the embed ever prompts viewers to sign in, you may need a “Publish to web” embed link for public portfolio viewing.
+            Open report launches the same published Power BI view in a separate tab. Use the report’s own controls to change filters or pages.
           </p>
         </div>
       </article>
